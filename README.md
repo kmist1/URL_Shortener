@@ -28,3 +28,7 @@ To run this project, Download or clone this repository locally and open the proj
 - python test.py
 
 ![To install dependencies](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-11%20at%201.02.26%20AM.png)
+
+I already have installed all dependency it is saying "Requirments already satisfied:...". In your case it would be different output than this. After installation test the app by running test.py file.
+
+
