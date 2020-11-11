@@ -21,5 +21,10 @@ Project is created with:
 * Flask Version: ^1.1.2
 
 ## Setup
-To run this project, Download or clone this repository locally and open the project using Visual Studio Code or PyCharm. First you need to install the [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/) then write following commands:
+To run this project, Download or clone this repository locally and open the project using Visual Studio Code or PyCharm. First, you will need to download and install [Python](https://www.python.org/downloads/) latest version in your local machine, If you already have python installed you all set!. Run following commands in server directory to install all dependencies and run the server application successfully.
 
+- cd server
+- pip install -e .
+- python test.py
+
+![To install dependencies](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-11%20at%201.02.26%20AM.png)
