@@ -1,3 +1,3 @@
-from src import flask_app
+from flask_app1 import flask_app1
 
-flask_app.app.run(debug = True)
+flask_app1.app.run(debug = True)

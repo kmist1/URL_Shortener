@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  flask_app1:
+    build: ./flask_app1
+    ports:
+    - "5001:5000"
+  flask_app2:
+    build: ./flask_app2
+    ports:
+    - "5002:5000"
+  nginx:
+    build: ./nginx
+    ports:
+    - "8080:80"
+    depends_on:
+    - flask_app1
+    - flask_app2
