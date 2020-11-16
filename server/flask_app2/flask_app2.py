@@ -18,18 +18,30 @@ db.intialize_db(app)
 
 # @app.route('/user')
 # def get_user():
+''' *********************** FROM APP2 *********************** '''
+@app.route('/')
+def HelloUser():
+    return 'Hello, you are using App2'
 
 
 ''' *********************** Creating new user *********************** '''
 @app.route('/users',methods=['POST'])
 def post_user():
-    """
-    creating a new user, if user exists return error message else create user
-    """
-    body = request.get_json()
-    user = User(**body).save()
-    id = user.id
-    return {'id':str(id)},200
+    return request.get_json()
+    # try:
+    #     """
+    #     creating a new user, if user exists return error message else create user
+    #     """
+    #     body = request.get_json()
+    #     user = User(**body).save()
+    #     id = user.id
+    #     return {'id':str(id)},200
+    #
+    # except Exception as e:
+    #     # Error while trying to create the resource
+    #     # Add message for debugging purpose
+    #     print(e)
+    #     return "Error", 500
 
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
@@ -45,7 +57,7 @@ def post_link():
         long_link = body["long_link"]
         user_email = body["user_email"]
         if (long_link):
-            sort_link = "http://127.17.0.1:5002/" + ''.join(random.sample(string.ascii_letters + string.digits, length)) + "/"
+            sort_link = "http://127.0.0.1:5002/" + ''.join(random.sample(string.ascii_letters + string.digits, length)) + "/"
             obj_dict = {
                 "long_link":long_link,
                 "sort_link":sort_link,
@@ -72,7 +84,7 @@ def get_link(sort_link):
     # create new link
     try:
 
-        s_link = "http://127.17.0.1:5002/"+sort_link+"/"
+        s_link = "http://127.0.0.1:5002/"+sort_link+"/"
         l_link = c_db.link.find_one({"sort_link":s_link},{"long_link":1})
         print("this is long_link: {}".format(l_link["long_link"]))
         return redirect(l_link["long_link"],302)
@@ -87,6 +99,6 @@ def get_link(sort_link):
 
 ''' *************************************************************** '''
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0')
 
 

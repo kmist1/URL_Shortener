@@ -19,18 +19,31 @@ db.intialize_db(app)
 
 # @app.route('/user')
 # def get_user():
-
+''' *********************** FROM APP1 *********************** '''
+@app.route('/')
+def HelloUser():
+    return 'Hello, you are using App1'
 
 ''' *********************** Creating new user *********************** '''
 @app.route('/users',methods=['POST'])
 def post_user():
-    """
-    creating a new user, if user exists return error message else create user
-    """
-    body = request.get_json()
-    user = User(**body).save()
-    id = user.id
-    return {'id':str(id)},200
+
+    return request.get_json()
+    # print('Im in users route')
+    # try:
+    #     """
+    #     creating a new user, if user exists return error message else create user
+    #     """
+    #     body = request.get_json()
+    #     user = User(**body).save()
+    #     id = user.id
+    #     return {'id':str(id)},200
+    #
+    # except Exception as e:
+    #     # Error while trying to create the resource
+    #     # Add message for debugging purpose
+    #     print(e)
+    #     return "Error", 500
 
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
@@ -88,6 +101,6 @@ def get_link(sort_link):
 
 ''' *************************************************************** '''
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0')
 
 
