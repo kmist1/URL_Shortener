@@ -1,7 +1,6 @@
-FROM python:3
+FROM python:3.8
 COPY ./requirements.txt /requirements.txt
 WORKDIR /
 RUN pip install -r requirements.txt
 COPY . /
-ENTRYPOINT [ "python3" ]
-CMD [ "flask_app2.py" ]
+CMD [ "python3","flask_app2.py" ]

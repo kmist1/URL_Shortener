@@ -3,5 +3,4 @@ COPY ./requirements.txt /requirements.txt
 WORKDIR /
 RUN pip install -r requirements.txt
 COPY . /
-ENTRYPOINT [ "python3" ]
-CMD [ "flask_app1.py" ]
+CMD [ "python3","flask_app1.py" ]

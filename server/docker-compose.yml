@@ -1,13 +1,24 @@
 version: '3.8'
 services:
+  my_db:
+    image: mongo
+    ports:
+    - "27018:27017"
+
   flask_app1:
     build: ./flask_app1
     ports:
     - "5001:5000"
+    depends_on:
+      - my_db
+
   flask_app2:
     build: ./flask_app2
     ports:
     - "5002:5000"
+    depends_on:
+      - my_db
+
   nginx:
     build: ./nginx
     ports:

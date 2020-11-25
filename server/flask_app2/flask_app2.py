@@ -1,20 +1,16 @@
-import pymongo
-from Models import User, db
-from Models import Link
-
+import json
 import string,random
+from pymongo import MongoClient
 from flask import Flask, request, redirect
+from bson.json_util import dumps
 
-connection = pymongo.MongoClient()
-c_db = connection["users"]
-
+#creating client connection to mongoDB instance running on local machine
+client = MongoClient('mongodb://my_db:27017')
+db = client.URL_SortenerDB
 
 app = Flask(__name__)
-app.config['MONGODB_SETTINGS'] = {
-    'host':'mongodb://localhost/users'
-}
 
-db.intialize_db(app)
+
 
 # @app.route('/user')
 # def get_user():
@@ -23,25 +19,29 @@ db.intialize_db(app)
 def HelloUser():
     return 'Hello, you are using App2'
 
-
 ''' *********************** Creating new user *********************** '''
 @app.route('/users',methods=['POST'])
 def post_user():
-    return request.get_json()
-    # try:
-    #     """
-    #     creating a new user, if user exists return error message else create user
-    #     """
-    #     body = request.get_json()
-    #     user = User(**body).save()
-    #     id = user.id
-    #     return {'id':str(id)},200
-    #
-    # except Exception as e:
-    #     # Error while trying to create the resource
-    #     # Add message for debugging purpose
-    #     print(e)
-    #     return "Error", 500
+    print('Im in users route')
+    try:
+        '''creating a new user, if user exists return error message else create user'''
+        data = json.loads(request.data)
+        firstName = data['FirstName']
+        lastName = data['LastName']
+        email = data['Email']
+
+        if firstName and lastName and email:
+            db.users.insert_one({
+                "FirstName": firstName,
+                "LastName": lastName,
+                "Email": email
+            })
+
+        return dumps({'message': 'SUCCESS'}), 200
+
+    except Exception as e:
+        return dumps({'error': str(e)})
+
 
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
@@ -52,29 +52,12 @@ def post_link():
 
     # create new link
     try:
-        length = 6
-        body = request.get_json()
-        long_link = body["long_link"]
-        user_email = body["user_email"]
-        if (long_link):
-            sort_link = "http://127.0.0.1:5002/" + ''.join(random.sample(string.ascii_letters + string.digits, length)) + "/"
-            obj_dict = {
-                "long_link":long_link,
-                "sort_link":sort_link,
-                "user_email":user_email
-            }
-            Link(**obj_dict).save()
-            return "Link created, your sort_link: {}.".format(sort_link),200
-
-
-
+        '''Do something'''
     except:
-        # Error while trying to create the resource
-        # Add message for debugging purpose
-        return "Error", 500
+        '''what is error?'''
+
 
 ''' *********************** get long_URL *********************** '''
-
 @app.route('/<sort_link>',methods = ['GET','POST'])
 def get_link(sort_link):
     """
@@ -83,22 +66,14 @@ def get_link(sort_link):
 
     # create new link
     try:
-
-        s_link = "http://127.0.0.1:5002/"+sort_link+"/"
-        l_link = c_db.link.find_one({"sort_link":s_link},{"long_link":1})
-        print("this is long_link: {}".format(l_link["long_link"]))
-        return redirect(l_link["long_link"],302)
-
+        '''Do Something'''
 
     except:
-        # Error while trying to create the resource
-        # Add message for debugging purpose
-        return "Error", 500
+        '''why you giving error?'''
 
 
 
 ''' *************************************************************** '''
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-
 
