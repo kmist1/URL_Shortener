@@ -4,6 +4,7 @@ URL Shortner Web Application using React.js for Frontend and Flask + MongoBD for
 ## Table of Content
 * [General info](#general-info)
 * [Technologies](#technologies)
+* [Cloning Project](#clone-project)
 * [Setup](#setup)
 
 ## General info
@@ -19,6 +20,13 @@ Project is created with:
 * Redux version: ^4.0.5
 * TypeScipt version: ^3.7.5
 * Flask Version: ^1.1.2
+
+## Clone Project
+To clone this project click the green code button on the top right corner of this page. copy the HTTPs URL and open the local directory on command line / terminal for macOS. clone the project using follwing command on terminal:
+
+- git clone < copied-link >
+
+The project should be successfully cloned locally. Now you can follow setup to run the project locally.
 
 ## Setup
 To run this project, Download or clone this repository locally and open the project using Visual Studio Code or PyCharm. First, you will need to download and install [Python](https://www.python.org/downloads/) latest version in your local machine, If you already have python installed you all set!. Run following commands in server directory to install all dependencies and run the server application successfully.
