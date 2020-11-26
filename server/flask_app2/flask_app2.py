@@ -46,11 +46,7 @@ def post_user():
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
 def post_link():
-    """
-    function to create new link
-    """
     length = 6
-    # create new link
     try:
         data = json.loads(request.data)
         longLink = data['LongLink']
@@ -74,18 +70,22 @@ def post_link():
 ''' *********************** get long_URL *********************** '''
 @app.route('/<sort_link>',methods = ['GET','POST'])
 def get_link(sort_link):
-    """
-    function to get long link
-    """
-
-    # create new link
     try:
-        '''Do Something'''
+        s_link1 = "http://localhost:5001/" + sort_link + "/"
+        s_link2 = "http://localhost:5002/" + sort_link + "/"
 
-    except:
-        '''why you giving error?'''
+        try:
+            l_link = db.links.find_one({"SortLink": s_link1},{"LongLink": 1})
+            print("this is long_link: {}".format(l_link["LongLink"]))
 
+        except:
+            l_link = db.links.find_one({"SortLink": s_link2}, {"LongLink": 1})
+            print("this is long_link: {}".format(l_link["LongLink"]))
 
+        return redirect(l_link["LongLink"], 302)
+
+    except Exception as e:
+        return dumps({'error': str(e)})
 
 ''' *************************************************************** '''
 if __name__ == '__main__':
