@@ -16,10 +16,11 @@ is setup using Flask and MongoDB. To store your data in a secure fashion this ap
 ## Technologies
 Project is created with:
 * React version: ^16.13.1
-* MondoDB version:  ^3.5.5
 * Redux version: ^4.0.5
 * TypeScipt version: ^3.7.5
 * Flask Version: ^1.1.2
+* Pymongo Version: ^3.11.0
+* Docker Version:  ^19.03.13
 
 ## Clone Project
 To clone this project click the green code button on the top right corner of this page. copy the HTTPs URL and open the local directory on command line / terminal for macOS. clone the project using follwing command on terminal:
