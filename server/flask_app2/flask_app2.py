@@ -49,12 +49,26 @@ def post_link():
     """
     function to create new link
     """
-
+    length = 6
     # create new link
     try:
-        '''Do something'''
-    except:
-        '''what is error?'''
+        data = json.loads(request.data)
+        longLink = data['LongLink']
+        userEmail = data['UserEmail']
+
+        if longLink and userEmail:
+            sort_link = "http://localhost:5002/" + ''.join(random.sample(string.ascii_letters + string.digits, length)) + "/"
+            db.links.insert_one({
+                "LongLink": longLink,
+                "SortLink": sort_link,
+                "UserEmail": userEmail
+            })
+
+            return 'here is sort link' + sort_link, 200
+
+    except Exception as e:
+        return dumps({'error': str(e)})
+
 
 
 ''' *********************** get long_URL *********************** '''
