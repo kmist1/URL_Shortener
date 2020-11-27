@@ -32,14 +32,23 @@ The project should be successfully cloned locally. Now you can follow setup to r
 ## Setup
 To run this project, Download or clone this repository locally and open the project using Visual Studio Code or PyCharm. First, you will need to download and install [Python](https://www.python.org/downloads/) latest version in your local machine, If you already have python installed you all set!. Run following commands in server directory to install all dependencies and run the server application successfully.
 
+I strongly recommend to visit this [tutorial](https://www.nurmatova.com/dockerized-python-application.html) to Download and Install and get familiar with Docker before going further.
+
+After Installation of docker in local machine open the project and type following commands.
+
 - cd server
-- pip install -e .
-- python test.py
+- docker run -d -p 127.0.0.1:27018:27017 --name mongodb mongo
+- docker-compose build
+- docker-compose up
 
-![To install dependencies](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-11%20at%201.02.26%20AM.png)
+Second command will create container under the name of mongodb (you can name it anything) and will also create mongo image and use that image for mongodb database.
+here, mongodb running on port 27018 which we are mapping to 27017 which is out local machine mongodb (mongodb compass) to see the result.
 
-I already have installed all dependency it is saying "Requirments already satisfied:...". In your case it would be different output than this. After installation test the app by running test.py file.
+Please use following commands if come accross Errors related to Address Already in use or MongoNetworkError:
+- docker rm -f $(docker ps -aq) (will remove all of your containers)
+- docker network rm $(docker network ls -q) (will remove all of your networks)
 
-![To test code](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-11%20at%201.24.00%20AM.png)
+
+
 
 
