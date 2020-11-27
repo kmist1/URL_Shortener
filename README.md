@@ -37,7 +37,7 @@ I strongly recommend to visit this [tutorial](https://www.nurmatova.com/dockeriz
 After Installation of docker in local machine open the project and type following commands. I would suggest to create new conda enviornment for this project.
 
 - cd server
-- conda create --name <env-name>
+- conda create --name 'env-name'
 ![Creating New Enviorment](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-26%20at%207.39.53%20PM.png)
 - docker run -d -p 127.0.0.1:27018:27017 --name mongodb mongo
 ![After you run this command](https://github.com/kmist1/URL_Shortener/blob/main/server/imgs/Screenshot%202020-11-26%20at%207.42.17%20PM.png)
