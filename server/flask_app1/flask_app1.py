@@ -14,38 +14,45 @@ app = Flask(__name__)
 
 
 
-# @app.route('/user')
-# def get_user():
+
 ''' *********************** FROM APP1 *********************** '''
 @app.route('/')
 def HelloUser():
     return 'Hello, you are using App1'
 
+
+
+
 ''' *********************** Creating new user *********************** '''
 @app.route('/users',methods=['POST'])
 def post_user():
-    print('Im in users route')
     try:
-        '''creating a new user, if user exists return error message else create user'''
         data = json.loads(request.data)
         firstName = data['FirstName']
         lastName = data['LastName']
         email = data['Email']
 
-        if firstName and lastName and email:
-            # do validation checks here
-            isEmail = isEmail_valid(email)
-            if isEmail:
-                db.users.insert_one({
-                    "FirstName": firstName,
-                    "LastName": lastName,
-                    "Email": email
-                })
-                return dumps({'message': 'SUCCESS'}), 200
-            else: return "Email is not valid",500
+        '''creating a new user, if user exists return message that user already exists else create new user'''
+        isUser = db.links.users({"Email": email})
+        if isUser:
+            return "User already exists",400
+        else:
+            if firstName and lastName and email:
+                # do validation checks here
+                isEmail = isEmail_valid(email)
+                if isEmail:
+                    db.users.insert_one({
+                        "FirstName": firstName,
+                        "LastName": lastName,
+                        "Email": email
+                    })
+                    return dumps({'message': 'SUCCESS'}), 200
+                else: return "Email is not valid",400
 
     except Exception as e:
         return dumps({'error': str(e)})
+
+
 
 
 ''' *********************** Creating new sort_URL *********************** '''
@@ -56,24 +63,28 @@ def post_link():
         data = json.loads(request.data)
         longLink = data['LongLink']
         userEmail = data['UserEmail']
-        print(longLink, userEmail)
 
-        if longLink and userEmail:
-            print(longLink,userEmail)
-            # do validation checks here
-            isEmail = isEmail_valid(userEmail)
-            isURL = isURL_valid(longLink)
-            print(isEmail,isURL)
-            if isEmail and isURL:
-                sort_link = "http://localhost:5001/" + ''.join(
-                    random.sample(string.ascii_letters + string.digits, length)) + "/"
-                db.links.insert_one({
-                    "LongLink": longLink,
-                    "SortLink": sort_link,
-                    "UserEmail": userEmail
-                })
-                return 'here is sort link' + sort_link, 200
-            else: return "Error: UserEmail or longURL is invalid",500
+        '''creating a new sort_link, if longLink exists return message that link already exists else create new sortLink'''
+        isURL = db.links.find_one({"LongLink": longLink})
+
+        if isURL:
+            return "URL already exists and converted to sort_url",400
+        else:
+            if longLink and userEmail:
+                # do validation checks here
+                isEmail = isEmail_valid(userEmail)
+                isURL = isURL_valid(longLink)
+                print(isEmail,isURL)
+                if isEmail and isURL:
+                    sort_link = "http://localhost:5000/" + ''.join(
+                        random.sample(string.ascii_letters + string.digits, length)) + "/"
+                    db.links.insert_one({
+                        "LongLink": longLink,
+                        "SortLink": sort_link,
+                        "UserEmail": userEmail
+                    })
+                    return 'here is sort link' + sort_link, 200
+                else: return "Error: UserEmail or longURL is invalid",400
 
     except Exception as e:
         return dumps({'error': str(e)})
@@ -83,16 +94,8 @@ def post_link():
 @app.route('/<sort_link>',methods = ['GET','POST'])
 def get_link(sort_link):
     try:
-        s_link1 = "http://localhost:5001/" + sort_link + "/"
-        s_link2 = "http://localhost:5002/" + sort_link + "/"
-
-        try:
-            l_link = db.links.find_one({"SortLink": s_link1},{"LongLink": 1})
-            print("this is long_link: {}".format(l_link["LongLink"]))
-
-        except:
-            l_link = db.links.find_one({"SortLink": s_link2}, {"LongLink": 1})
-            print("this is long_link: {}".format(l_link["LongLink"]))
+        s_link1 = "http://localhost:5000/" + sort_link + "/"
+        l_link = db.links.find_one({"SortLink": s_link1},{"LongLink": 1})
 
         return redirect(l_link["LongLink"], 302)
 
