@@ -3,6 +3,8 @@ import string,random
 from pymongo import MongoClient
 from flask import Flask, request, redirect
 from bson.json_util import dumps
+from validators.email_validator import isEmail_valid
+from validators.url_validator import isURL_valid
 
 #creating client connection to mongoDB instance running on local machine
 client = MongoClient('mongodb://my_db:27017')
@@ -31,13 +33,16 @@ def post_user():
         email = data['Email']
 
         if firstName and lastName and email:
-            db.users.insert_one({
-                "FirstName": firstName,
-                "LastName": lastName,
-                "Email": email
-            })
-
-        return dumps({'message': 'SUCCESS'}), 200
+            # do validation checks here
+            isEmail = isEmail_valid(email)
+            if isEmail:
+                db.users.insert_one({
+                    "FirstName": firstName,
+                    "LastName": lastName,
+                    "Email": email
+                })
+                return dumps({'message': 'SUCCESS'}), 200
+            else: return "Email is not valid",500
 
     except Exception as e:
         return dumps({'error': str(e)})
@@ -51,17 +56,24 @@ def post_link():
         data = json.loads(request.data)
         longLink = data['LongLink']
         userEmail = data['UserEmail']
+        print(longLink, userEmail)
 
         if longLink and userEmail:
-            sort_link = "http://localhost:5001/" + ''.join(
-                random.sample(string.ascii_letters + string.digits, length)) + "/"
-            db.links.insert_one({
-                "LongLink": longLink,
-                "SortLink": sort_link,
-                "UserEmail": userEmail
-            })
-
-            return 'here is sort link' + sort_link, 200
+            print(longLink,userEmail)
+            # do validation checks here
+            isEmail = isEmail_valid(userEmail)
+            isURL = isURL_valid(longLink)
+            print(isEmail,isURL)
+            if isEmail and isURL:
+                sort_link = "http://localhost:5001/" + ''.join(
+                    random.sample(string.ascii_letters + string.digits, length)) + "/"
+                db.links.insert_one({
+                    "LongLink": longLink,
+                    "SortLink": sort_link,
+                    "UserEmail": userEmail
+                })
+                return 'here is sort link' + sort_link, 200
+            else: return "Error: UserEmail or longURL is invalid",500
 
     except Exception as e:
         return dumps({'error': str(e)})
