@@ -70,28 +70,23 @@ export default function Home() {
 
     React.useEffect(() => {
         if(values.submitFlag){
-            //console.log('flag-2');
-            try{
-                //console.log('flag-5');
-                const data = {Email:values.Email, LongLink:values.LongURL};
-                
-                fetch('/links',{
-                    method: "POST",
-                    headers: {
-                        "Content_Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                }).then(response => response.json().then(data=> {
-                    alert(`Please copy this link: ${data['sort_link']}`)
-                }))
-                // if (response.status === 200) {
-                //     console.log(response.statusText);
-                //     alert(response)
-                // };
-
-            }catch (error) {
-                console.error(error.message);
-            };   
+            
+            (async ()=> {
+                try {
+                    const data = {Email:values.Email, LongLink:values.LongURL};
+                    const response = await Axios.post('/links',data);
+                    if (response.status === 200) {
+                        alert(`Here is your sort link: ${response.data['sort_link']}`);
+                    }
+                }
+                catch (e) {
+                    if (e.message === 'Request failed with status code 400') {
+                        alert(`Failed to create sort URL, Please make sure long url not used before`);
+                    }
+                    else alert(`something wrong with server, Please contact us`);
+                }
+            })();
+            
         }
     },[values.submitFlag]);
 
