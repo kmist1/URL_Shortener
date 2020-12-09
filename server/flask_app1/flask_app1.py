@@ -58,11 +58,15 @@ def post_user():
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
 def post_link():
+    print('I am in links route')
+    print('flag-1',json.loads(request.data))
     length = 6
     try:
         data = json.loads(request.data)
+        print('flag-2',data);
         longLink = data['LongLink']
-        userEmail = data['UserEmail']
+        userEmail = data['Email']
+        print('flag-3',longLink,userEmail)
 
         '''creating a new sort_link, if longLink exists return message that link already exists else create new sortLink'''
         isURL = db.links.find_one({"LongLink": longLink})
@@ -76,14 +80,14 @@ def post_link():
                 isURL = isURL_valid(longLink)
                 print(isEmail,isURL)
                 if isEmail and isURL:
-                    sort_link = "http://localhost:5000/" + ''.join(
-                        random.sample(string.ascii_letters + string.digits, length)) + "/"
+                    sort_link = "http://localhost:8080/" + ''.join(
+                        random.sample(string.ascii_letters + string.digits, length))
                     db.links.insert_one({
                         "LongLink": longLink,
                         "SortLink": sort_link,
                         "UserEmail": userEmail
                     })
-                    return 'here is sort link' + sort_link, 200
+                    return dumps({'sort_link':sort_link}), 200
                 else: return "Error: UserEmail or longURL is invalid",400
 
     except Exception as e:
@@ -94,7 +98,7 @@ def post_link():
 @app.route('/<sort_link>',methods = ['GET','POST'])
 def get_link(sort_link):
     try:
-        s_link1 = "http://localhost:5000/" + sort_link + "/"
+        s_link1 = "http://localhost:8080/" + sort_link
         l_link = db.links.find_one({"SortLink": s_link1},{"LongLink": 1})
 
         return redirect(l_link["LongLink"], 302)
