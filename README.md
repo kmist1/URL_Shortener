@@ -11,9 +11,8 @@ URL Shortner Web Application using React.js for Frontend and Flask + MongoBD for
 
 
 ## General info
-LinkIt will take your long URL and convert it into short link on a click. You can also create your own customize link and easily manage
-your links at link-manager after you sign-up. Frontend of this app will be developed using React.js, CSS3 and Material-UI componenets. And, Backend 
-is setup using Flask and MongoDB. To store your data in a secure fashion this app will be using Strong Parameters, Validators and Auth middlewares.
+This application is to create a sort URL from Long URL. user can provide Long URL and Email to create sort URL and created URL will be popped up on webpage as well as it will be sent to given Email address. user can not create sort URL using same long URL twice. Fontend of this application is built using React.js + TypeScript and backend is built using Flask + MongoDB.
+User need to provide valid Email and Long URL to create sort URL or else it will give an Invalid request error message.
 
 
 ## Technologies
