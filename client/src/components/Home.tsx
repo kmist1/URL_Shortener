@@ -119,7 +119,13 @@ export default function Home() {
                                     <Button 
                                         variant="contained"
                                         onClick={handleSubmit}
-                                        style={{width:'100%', marginBottom:'-20%'}}
+                                        style={{
+                                            width:'100%',
+                                            marginBottom:'-20%',
+                                            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+                                            fontWeight: 'bold',
+                                            font: 'fantasy'
+                                        }}
                                     >Short It
                                     </Button>
                                 </div>

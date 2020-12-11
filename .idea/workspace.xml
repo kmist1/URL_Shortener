@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="565d55a6-a656-4e1f-8b17-ab4a2876f642" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tests/test_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/tests/test_api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +184,7 @@
       <workItem from="1606338605375" duration="5675000" />
       <workItem from="1606438996843" duration="1400000" />
       <workItem from="1607134133989" duration="2553000" />
-      <workItem from="1607405877703" duration="5945000" />
+      <workItem from="1607405877703" duration="12494000" />
     </task>
     <servers />
   </component>
@@ -200,10 +200,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="455" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605331928556">
+    <state x="455" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607663414434">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="455" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1605331928556" />
+    <state x="455" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1607663414434" />
     <state x="308" y="211" key="FileChooserDialogImpl" timestamp="1605158241792">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
