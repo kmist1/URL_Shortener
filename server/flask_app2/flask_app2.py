@@ -2,6 +2,7 @@ import json
 import string,random
 from pymongo import MongoClient
 from flask import Flask, request, redirect
+from flask_mail import Mail, Message
 from bson.json_util import dumps
 from validators.email_validator import isEmail_valid
 from validators.url_validator import isURL_valid
@@ -11,7 +12,16 @@ client = MongoClient('mongodb://my_db:27017')
 db = client.URL_SortenerDB
 
 app = Flask(__name__)
+mail = Mail(app)
 
+# configuration of mail
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'url.shortner.unh@gmail.com'
+app.config['MAIL_PASSWORD'] = '#qwerty12345'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 
 
@@ -58,11 +68,15 @@ def post_user():
 ''' *********************** Creating new sort_URL *********************** '''
 @app.route('/links',methods = ['post'])
 def post_link():
+    print('I am in links route')
+    print('flag-1',json.loads(request.data))
     length = 6
     try:
         data = json.loads(request.data)
+        print('flag-2',data);
         longLink = data['LongLink']
         userEmail = data['Email']
+        print('flag-3',longLink,userEmail)
 
         '''creating a new sort_link, if longLink exists return message that link already exists else create new sortLink'''
         isURL = db.links.find_one({"LongLink": longLink})
@@ -83,6 +97,14 @@ def post_link():
                         "SortLink": sort_link,
                         "UserEmail": userEmail
                     })
+                    msg = Message(
+                        'Hello',
+                        sender='krunalmistry119@gmail.com',
+                        recipients=[userEmail]
+                    )
+                    msg.body = 'You have successfully created your sort link: ' + sort_link
+                    mail.send(msg)
+
                     return dumps({'sort_link':sort_link}), 200
                 else: return "Error: UserEmail or longURL is invalid",400
 
